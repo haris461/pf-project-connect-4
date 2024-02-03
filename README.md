@@ -13,12 +13,21 @@ bool check_diagonal_combo_NW_SE(int x, int y, int player);
 bool check_vertical_combo(int x, int y, int player);
 bool check_horizontal_combo(int x, int y, int player);
 
+The using namespace std; statement is used for convenience, allowing the use of cout and cin without the std:: prefix.
+Function declarations for various game functions such as drawing the board, player movement, and checking for winning combinations.
+
 int board_info[HEIGHT][WIDTH] = { {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0} };
+
+              A 2D array board_info representing the game board is initialized with zeros. Each element corresponds to a cell on the board.
+
+
+
+                                 
 
                                  void draw_board()
 {
@@ -36,6 +45,7 @@ int board_info[HEIGHT][WIDTH] = { {0,0,0,0,0,0,0},
         cout << "\n---------------------" << endl;
     }
 }
+//This function prints the current state of the game board.
 
 void player_movement(int player)
 {
@@ -74,6 +84,19 @@ void player_movement(int player)
     LastMoveX = choice - 1;
 }
 
+//This function handles the movement of a player, taking input from the user, validating it,
+and updating the game board accordingly.
+These functions are responsible for checking if a player has won the game based on the latest move. They check for winning combinations horizontally, vertically, and diagonally.
+Main Function:
+(Not included in the provided code snippet)
+
+Overall, the program sets up the game board, allows players to make moves, and checks for a winner after each move. The game is represented in the console window, and players take turns making moves until a winner is determined or the board is filled.
+
+
+
+
+
+
 bool check_for_winner(int x, int y, int player)
 {
     bool winner;
@@ -84,6 +107,13 @@ bool check_for_winner(int x, int y, int player)
     else if (check_horizontal_combo(x, y, player)) return true;
     else return false;
 }
+
+The check_for_winner function is designed to determine if the current move made by a player at position (x, y) has resulted in a winning combination. It calls four other functions to check for a win in various directions: diagonally from southwest to northeast (check_diagonal_combo_SW_NE), diagonally from northwest to southeast (check_diagonal_combo_NW_SE), vertically (check_vertical_combo), and horizontally (check_horizontal_combo). The function returns true if any of these checks indicates a winning combination, and false otherwise.
+
+
+
+
+
 
 bool check_diagonal_combo_SW_NE(int x, int y, int player)
 {
@@ -115,6 +145,12 @@ bool check_diagonal_combo_SW_NE(int x, int y, int player)
     else return false;
 }
 
+
+
+The check_diagonal_combo_SW_NE function checks for a winning combination diagonally from southwest to northeast starting from the given coordinates (x, y). It counts the consecutive occurrences of the player's symbol in both directions and returns true if there are at least four in a row.
+
+
+
 bool check_diagonal_combo_NW_SE(int x, int y, int player)
 {
     int score = 1;
@@ -145,6 +181,14 @@ bool check_diagonal_combo_NW_SE(int x, int y, int player)
     else return false;
 }
 
+
+The check_diagonal_combo_NW_SE function checks for a winning combination diagonally from northwest to southeast starting from the given coordinates (x, y). Similar to the previous function (check_diagonal_combo_SW_NE), it counts the consecutive occurrences of the player's symbol in both diagonal directions and returns true if there are at least four in a row.
+
+
+
+
+
+
 bool check_vertical_combo(int x, int y, int player)
 {
     int score = 1;
@@ -163,6 +207,13 @@ bool check_vertical_combo(int x, int y, int player)
     if (score == 4) return true;
     else return false;
 }
+
+
+
+
+The check_horizontal_combo function checks for a winning combination horizontally starting from the given coordinates (x, y). It counts the consecutive occurrences of the player's symbol in both left and right directions and returns true if there are at least four in a row.
+
+
 
 bool check_horizontal_combo(int x, int y, int player)
 {
