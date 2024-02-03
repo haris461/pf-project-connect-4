@@ -20,6 +20,184 @@ int board_info[HEIGHT][WIDTH] = { {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0},
                                  {0,0,0,0,0,0,0} };
 
+                                 void draw_board()
+{
+    cout << endl;
+
+    for (int y = 0; y < HEIGHT; y++)
+    {
+        for (int x = 0; x < WIDTH; x++)
+        {
+            cout << "| ";
+            if (board_info[y][x] == 0) cout << " ";
+            else if (board_info[y][x] == 1) cout << "X";
+            else if (board_info[y][x] == 2) cout << "O";
+        }
+        cout << "\n---------------------" << endl;
+    }
+}
+
+void player_movement(int player)
+{
+
+    int choice;
+    cout << "\nPlayer" << player << ", please select a number from 1 - 7: ";
+    cin >> choice;
+
+
+    if (cin.fail())
+    {
+        cout << "Error!";
+        exit(1);
+    }
+
+    while (choice > WIDTH || choice <= 0)
+    {
+        cout << "\nPlease select again: ";
+        cin >> choice;
+    }
+
+    int number = 0;
+    while (board_info[(HEIGHT - 1) - number][(choice - 1)] != 0)
+    {
+        number++;
+        if (number > (HEIGHT - 1))
+        {
+            cout << "\nPlease select again: ";
+            cin >> choice;
+            number = 0;
+        }
+    };
+
+    board_info[(HEIGHT - 1) - number][choice - 1] = player;
+    LastMoveY = (HEIGHT - 1) - number;
+    LastMoveX = choice - 1;
+}
+
+bool check_for_winner(int x, int y, int player)
+{
+    bool winner;
+
+    if (check_diagonal_combo_SW_NE(x, y, player)) return true;
+    else if (check_diagonal_combo_NW_SE(x, y, player)) return true;
+    else if (check_vertical_combo(x, y, player)) return true;
+    else if (check_horizontal_combo(x, y, player)) return true;
+    else return false;
+}
+
+bool check_diagonal_combo_SW_NE(int x, int y, int player)
+{
+    int score = 1;
+    int count = 1;
+
+    while ((y - count >= 0) && (x + count < WIDTH))
+    {
+        if (board_info[y - count][x + count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    count = 1;
+    while ((y + count < HEIGHT) && (x - count >= 0))
+    {
+        if (board_info[y + count][x - count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    if (score == 4) return true;
+    else return false;
+}
+
+bool check_diagonal_combo_NW_SE(int x, int y, int player)
+{
+    int score = 1;
+    int count = 1;
+
+    while ((y + count >= 0) && (x + count < WIDTH))
+    {
+        if (board_info[y + count][x + count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    count = 1;
+    while ((y - count < HEIGHT) && (x - count >= 0))
+    {
+        if (board_info[y - count][x - count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    if (score == 4) return true;
+    else return false;
+}
+
+bool check_vertical_combo(int x, int y, int player)
+{
+    int score = 1;
+    int count = 1;
+
+    while (y + count >= 0 && y + count < HEIGHT)
+    {
+        if (board_info[y + count][x] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    if (score == 4) return true;
+    else return false;
+}
+
+bool check_horizontal_combo(int x, int y, int player)
+{
+    int score = 1;
+    int count = 1;
+
+    while ((x + count >= 0) && (x + count < WIDTH))
+    {
+        if (board_info[y][x + count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    count = 1;
+    while ((x - count < WIDTH) && (x - count >= 0))
+    {
+        if (board_info[y][x - count] == player)
+        {
+            score++;
+            count++;
+        }
+        else break;
+    }
+
+    if (score == 4) return true;
+    else return false;
+}
+
+
+
+
+
                                  
 
 int LastMoveX, LastMoveY;
