@@ -289,3 +289,24 @@ int main()
     return 0;
 }
 
+
+
+#output
+
+![image](https://github.com/haris461/pf-project-connect-4/assets/158203393/a7eb20a1-15b9-4f82-9263-c497df6d73b8)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
